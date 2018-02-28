@@ -245,8 +245,8 @@ console.log(item);
       method: "GET"
     }).then(function(response) {
       result = JSON.parse(response);
-      console.log(result);
-      console.log(result.findCompletedItemsResponse[0].searchResult[0].item.length);
+    //   console.log(result);
+    //   console.log(result.findCompletedItemsResponse[0].searchResult[0].item.length);
 
       for (var i = 0; i < result.findCompletedItemsResponse[0].searchResult[0].item.length; i++) {
 		
@@ -294,9 +294,9 @@ console.log(item);
 
 	      totals.push(totalNumber);
 	      totalsRound.push(Math.round(totalNumber));
-	      console.log(totalNumber);
+	    //   console.log(totalNumber);
 	      runningTally += totalNumber;
-	      console.log(runningTally.toFixed(2));
+	    //   console.log(runningTally.toFixed(2));
 	  }
 
 	  console.log(totals);
@@ -308,17 +308,21 @@ console.log(item);
 
 	  createFreq(totalsRound);
 	  
-	  var lowMiddle = Math.floor((result.findCompletedItemsResponse[0].searchResult[0].item.length - 1) / 2);
-	  var highMiddle = Math.ceil((result.findCompletedItemsResponse[0].searchResult[0].item.length - 1) / 2);
+	  var lowMiddle = Math.floor((totals.length - 1) / 2);
+	  console.log("lowMiddle " + lowMiddle);
+	  var highMiddle = Math.ceil((totals.length - 1) / 2);
+	  console.log("highMiddle " + highMiddle);
 	  var mean = runningTally.toFixed(2)/result.findCompletedItemsResponse[0].searchResult[0].item.length;
-	  var median = (lowMiddle + highMiddle) / 2;
+	  console.log("mean " + mean);
+	  var median = (totals[lowMiddle] + totals[highMiddle]) / 2;
+	  console.log("median " + median);
 
 
       var importantRow = $("<tr>");
 
       var priceRange = $("<td>").text(lowest + "-" + highest);
       var meanPrice = $("<td>").text(mean.toFixed(2));
-      var medianPrice = $("<td>").text(median);
+      var medianPrice = $("<td>").text(median.toFixed(2));
       var modePrice = $("<td>").text(modes(totals));
       var roundedMode = $("<td>").text(modes(totalsRound));
       var numberOfItems = $("<td>").text(result.findCompletedItemsResponse[0].searchResult[0].item.length);
